@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="MyDataBase" Class="DCDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\MyDataBase.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="MyDataBaseConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Article" Member="Articles">
+    <Type Name="Article">
+      <Column Name="CodeArt" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Libelle" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="PU" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Article_Composition" Member="Compositions" ThisKey="CodeArt" OtherKey="CodeArt" Type="Composition" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Composition" Member="Compositions">
+    <Type Name="Composition">
+      <Column Name="CodeCmp" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CodeArt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CodeCmd" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Qte" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Article_Composition" Member="Article" ThisKey="CodeArt" OtherKey="CodeArt" Type="Article" IsForeignKey="true" />
+      <Association Name="MesCommande_Composition" Member="MesCommande" ThisKey="CodeCmd" OtherKey="CodeCmd" Type="MesCommande" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MesCommandes" Member="MesCommandes">
+    <Type Name="MesCommande">
+      <Column Name="CodeCmd" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DateCmd" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="MesCommande_Composition" Member="Compositions" ThisKey="CodeCmd" OtherKey="CodeCmd" Type="Composition" />
+    </Type>
+  </Table>
+</Database>
